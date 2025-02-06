@@ -1,3 +1,5 @@
+import numpy as np
+
 def node_res_curvature(adj_mat):
   # input: adj_mat (numpy array) - the Adjacency Matrix of the graph
   # returns: node_curvature (numpy array) - Node resistance curvature at each vertex
