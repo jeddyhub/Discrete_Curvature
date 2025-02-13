@@ -24,7 +24,7 @@ def node_res_curvature(adj_mat):
   for i in range(adj_mat.shape[0]):
       node_curvature_i = 1
       for j in range(adj_mat.shape[0]):
-          if adj_mat[i,j] == 1:
+          if adj_mat[i,j] != 0:
               node_curvature_i = node_curvature_i - (0.5 * Omega[i,j] * adj_mat[i,j])
       node_curvature[i] = node_curvature_i
 
