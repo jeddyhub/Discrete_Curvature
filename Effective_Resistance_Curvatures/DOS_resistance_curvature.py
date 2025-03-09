@@ -1,28 +1,28 @@
 import numpy as np
 
-def res_curvature(adj_mat):
-  # input: adj_mat (numpy array) - the Adjacency Matrix of the graph
-  # returns: resistance_curvature (numpy array) - Effective resistance curvature at each vertex
-  # NOTE: this is the effective resistance curvature notion developed by KAREL DEVRIENDT, ANDREA OTTOLINI, AND STEFAN STEINERBERGER
-  # in the paper GRAPH CURVATURE VIA RESISTANCE DISTANCE - Discrete Applied Mathematics, 2024
-  
-  # construct Laplacian
-  ones_vector = np.ones(adj_mat[0].size)
-  Degree = np.diag(ones_vector @ adj_mat)
-  L = Degree - adj_mat
+def res_curvature(A):
+  # input: A (list) Adjacency Matrix (can be weighted if you want)
+  # returns: resistance_curvature (list) Steinerberger effective resistance curvature at each vertex
+
+  # construct laplacian
+  n = len(A[0])
+  A_np = np.array(A)
+
+  ones_vector = np.ones(n)
+  Degree = np.diag(ones_vector @ A_np)
+  L = Degree - A_np
 
   # construct Gamma
   GammaInverse = np.linalg.pinv(L)
 
   # construct effective resistance matrix Omega
-  Omega = np.empty([adj_mat.shape[0], adj_mat.shape[1]])
+  Omega = np.empty([n, n])
 
-  for i in range(adj_mat.shape[0]):
-    for j in range(adj_mat.shape[1]):
-        Omega[i,j] = GammaInverse[i,i] + GammaInverse[j,j] - 2 * GammaInverse[i,j]
+  for i in range(n):
+    for j in range(n):
+        Omega[i][j] = GammaInverse[i][i] + GammaInverse[j][j] - 2 * GammaInverse[i][j]
 
   # compute effective resistance curvature vector
-  ones_vector = np.ones(adj_mat.shape[0])
   resistance_curvature = np.linalg.solve(Omega, ones_vector)
 
-  return resistance_curvature
+  return resistance_curvature.tolist()
