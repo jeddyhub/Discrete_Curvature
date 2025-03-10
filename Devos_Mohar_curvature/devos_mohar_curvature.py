@@ -118,7 +118,7 @@ def devos_mohar_curvature(A):
     deg = ones_vec @ A[v-1]
     curv = 1 - (deg/2)
     for face in face_dict:
-        if v in face_dict[face]:
+        if (v-1) in face_dict[face]:
           curv += (1/len(face_dict[face]))
     curvature.append(curv)
 
